@@ -1,0 +1,8 @@
+Project Report
+Rafaat Mir, Kevin Leung, Johnny Han, Steve Qiu
+A Group
+Our project uses a blend of PHP and MySQL to deliver a database system for hospitals and their members through a clean front-end. The system utilizes efficient querying to display database content and, it allows users to search for specific information - a useful attribute for a database that we predict could become massive.  
+
+The goal of our project was to provide an organized interface for important information and our database system accomplishes this. Different tabs segregate different categories of information and display them in modifiable tables. Patient and staff members are able to register into the system and the server checks input information to retain consistency. In addition, appointment information for each user is stored and users can view them on demand. Users are also able to find hospital members, the number of rooms in a hospital, and the names of patients requiring specific procedures. The project uses different types of queries to accomplish its tasks and the entire backend is created through MySQL. 
+
+All in all, the project was a great learning experience for all of the members and it clears all the required checkpoints. With more time, we could have implemented additional feautures but we also like it as is.

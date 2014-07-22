@@ -1,0 +1,49 @@
+Patients(heathid, healthinfo, name, address, phone #, city, postal code, province)
+healthid -> healthinfo, name, address, phone #, city, postal code, province
+postal code -> province
+Not in BCNF
+
+Staff(SIN, name, phone #, address, city, postal code, province)
+SIN -> name, phone #, city, postal code, province
+postal code -> province
+Not in BCNF
+
+Hospital(name, city, address, postal code, province)
+name, city -> address, postal code, province
+postal code -> province
+Not in BCNF
+
+Physicians(SIN, specialty, level, room #, name, city)
+SIN -> specialty, level, room#, name, city
+In BCNF
+
+PatientStaysIn(healthid, room #, level, name, city) 
+healthid -> room#, level, name, city
+In BCNF
+
+WorksAt(SIN, name, city)
+SIN -> name, city
+In BCNF
+
+Procedure (proid, healthid, SIN, description, time, date)
+proid -> heatlhid, SIN, description, time, date
+In BCNF
+
+Rooms(level, room #, name, city)
+No FDs
+
+Office(level, room #, name, city)
+No FDs
+
+SurgeryRoom(level, room #, name, city) 
+No FDs
+
+All these are in BCNF
+
+Nurses(SIN) 
+
+Janitor(SIN)
+
+Receptionist(SIN)
+
+Security(SIN)

@@ -1,0 +1,53 @@
+Home
+mysql_query("SELECT DISTINCT * FROM staff where staff.name LIKE '%$psin%'");
+mysql_query("SELECT DISTINCT * FROM patient where patient.name LIKE '%$psin%'");
+mysql_query("SELECT P.healthid, P.name, PR.proid, PR.description FROM patient P, procedures PR where PR.proid = $hid AND P.healthid = PR.healthid");
+mysql_query("SELECT R.name,count(*),R.city FROM room R where R.city LIKE '%$cityid%' GROUP BY R.name");
+
+
+Staff
+$query_staff = "SELECT s.sin, s.name, s.phonenum, s.address, s.city, s.postal_code, s.province  FROM staff s, nurse n	WHERE s.sin = n.sin;";
+$query_staff = "	SELECT s.sin, s.name, s.phonenum, s.address, s.city, s.postal_code, s.province FROM staff s, physician p WHERE s.sin = p.sin;";
+$query_staff = "SELECT s.sin, s.name, s.phonenum, s.address, s.city, s.postal_code, s.province FROM staff s, janitor j WHERE s.sin = j.sin;";
+$query_staff = "SELECT s.sin, s.name, s.phonenum, s.address, s.city, s.postal_code, s.province FROM staff s, receptionist r WHERE s.sin = r.sin;";
+$query_staff = "SELECT s.sin, s.name, s.phonenum, s.address, s.city, s.postal_code, s.province  FROM staff s ";
+Room
+$query = "SELECT r.name as hname, r.roomnum as roomnum, r.level as level FROM Room r WHERE r.city = '$hcity' and r.name = '$hname';";
+Register
+$query="INSERT INTO Patient(healthid, healthinfo, name, phonenum ,address, city, postal_code, province) VALUES ($healthid,'$healthinfo','$name', '$phonenum', '$address', '$city', '$postal_code', '$province');";
+$query = "INSERT INTO Staff(sin,name,phonenum,address,city,postal_code,province) VALUES ($sin, '$name', '$phonenum', '$address', '$city', '$postal_code', '$province');";
+$query="INSERT INTO Procedures(proid,healthid,sin,description,date,time) VALUES ($proid, $healthid, $sin, '$description', '$date', '$time');";
+$query = "INSERT INTO procedureInRoom(proid,level,roomnum,name,city) VALUES ($proid,$level,'$roomnum','$name','$city');";
+Physician
+mysql_query("SELECT DISTINCT * FROM physician inner join staff where physician.sin = staff.sin;");
+pedit
+$query = "UPDATE patient SET name = '$newname', address = '$address', city = '$city', province = '$province', postal_code = '$postal_code', phonenum = '$pn'  WHERE healthid = $hid;";
+$query = "UPDATE staff SET name = '$newname', address = '$address', city = '$city', province = '$province', postal_code = '$postal_code', phonenum = '$pn' WHERE sin = $sin;";
+$query1 = "UPDATE staff SET name = '$newname', address = '$address', city = '$city', province = '$province', postal_code = '$postal_code', phonenum = '$pn' WHERE sin = $sin;";
+$query2 = "UPDATE physician SET specialty = '$specialty', office_room = $office_room, office_name = '$office_name', office_level = $office_level, office_city = '$office_city' WHERE sin = $sin;";
+Patient
+mysql_query("SELECT * FROM patient;");
+Appointment
+$query_appoint = "SELECT pr.date, pr.time, pr.description, pir.level, pir.roomnum, pir.name, pir.city, s.name as pname from procedures pr, ProcedureInRoom pir, staff s where pr.healthid = $sin and pir.proid = pr.proid and s.sin = pr.sin";
+Hospital
+mysql_query("SELECT h.name, h.address, h.city, h.postal_code, h.province, count(*) as cnt  FROM hospital h, WorksAt w WHERE h.city = w.city and h.name = w.name  GROUP BY h.name, h.city");
+$query = "select t.wcity as tCity, t.wProvince as tProvince, t.cnt as tcnt from (select w.city as wCity, h.province as wProvince, count(*) as cnt from worksat w, hospital h where h.city = w.city and h.name = w.name group by w.city, h.province) as t where t.cnt ";
+
+$query = "select t.wcity as tCity, t.wProvince as tProvince, t.cnt as tcnt from (select w.city as wCity, h.province as wProvince, count(*) as cnt
+				from worksat w, hospital h
+				where h.city = w.city and h.name = w.name
+				group by w.city, h.province) as t
+				where t.cnt ";
+	
+	if($_POST["amount"] == "max"){
+		$query .= ">= ";
+	} else {
+		$query .= "<= ";
+	}
+	
+	$query .= "ALL(select c.cnt from (select w.city as wCity, h.province as wProvince, count(*) as cnt
+				from worksat w, hospital h
+				where h.city = w.city and h.name = w.name
+				group by w.city, h.province) as c);";
+
+
